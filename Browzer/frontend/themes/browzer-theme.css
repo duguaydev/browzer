@@ -108,16 +108,6 @@ body {
     color: var(--header-text-color);
 }
 
-:root {
-    --theme-tab-bg: var(--color1);
-    --theme-tab-text: var(--color7);
-    --theme-active-tab-bg: var(--color3);
-    --theme-active-tab-text: var(--color15);
-    --theme-active-tab-border: var(--color4);
-    --theme-tab-content-bg: var(--color0);
-    --theme-border-color: var(--color4);
-}
-
 /* Tabs Styling */
 .nav-tabs {
     border: none;
@@ -153,6 +143,14 @@ body {
     background-color: var(--theme-tab-content-bg);
     padding: 15px;
     margin: 15px;
+}
+
+.tab-pane {
+    display: none;  /* Hide inactive tabs */
+}
+
+.tab-pane.active {
+    display: block;  /* Show the active tab */
 }
 
 /* Footer */

@@ -20,6 +20,18 @@ body {
 .navbar-brand {
     color: var(--text-color);  /* Sidebar link text color */
 }
+
+.CodeMirror {
+    height: 100%;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+#codeEditor {
+    height: 500px;
+    width: 100%;
+}
+
 /* Directory Tree Styles */
 #directoryTree ul {
     list-style-type: none;  /* Remove bullets */
@@ -74,10 +86,11 @@ body {
 
 /* Document Viewer */
 .document-viewer {
+    flex-grow: 1;
     background-color: var(--background-color);  /* Viewer background based on theme */
     color: var(--text-color);                  /* Text color based on theme */
     padding: 20px;
-    height: 100vh;                             /* Full height of the viewport */
+    height: auto;                             /* Full height of the viewport */
     overflow-y: auto;                          /* Scrollable content */
     border: 1px solid var(--border-color);     /* Border with theme color */
     border-radius: 8px;                        /* Rounded corners */
@@ -107,11 +120,4 @@ body {
     display: flex;
     height: 100vh;
 }
-/* Document Viewer (Remaining Space) */
-.document-viewer {
-    flex-grow: 1;  /* Take up the remaining space */
-    padding: 20px;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    overflow-y: auto;
-}
+
