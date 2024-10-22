@@ -167,7 +167,7 @@ body {
     left: 0;
 }
 
-.column9 {
+.column3 {
     background-color: var(--sidebar-background-color) !important;  /* Sidebar background */
     width: 500px; /* Adjust as needed */
     padding: 10px;
@@ -178,7 +178,7 @@ body {
     overflow-y: auto;
 }
 
-.column9 p {
+.column3 p {
     margin: 0px 0px 0px 0px;
     padding: 0px auto;
     font-size: 1.1rem;
@@ -297,18 +297,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .search-bar {
-    display: flex;
-    margin: 5px 5px 5px 5px;
-    max-width: 350px;
+    width: 85%; /* Ensure it takes the full width of its parent */
+    box-sizing: border-box; /* Ensure it includes padding/border */
 }
 
 /* Inputs */
 input {
-    display: flex;
+    box-sizing: border-box; /* Ensure it includes padding/border */
     background: var(--input-bg-color);
     border: 1px solid var(--input-border-color);
     border-radius: 8px;
     color: var(--text-color);
-    max-width: 350px;
+    width: 100%;
     align-items: left;
+    font-size: 1rem; 
+    padding: 10px 10px 10px 10px;
+    margin: 10px;
 }

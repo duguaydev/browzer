@@ -4,6 +4,7 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const app = express();
+const port = 3000;
 
 // Load Browser Server Variables
 const browserHost = process.env.BROWSER_HOST || 'localhost';
@@ -12,8 +13,13 @@ const browserApiKey = process.env.BROWSER_API_KEY;
 const browserBasePath = process.env.BROWSER_BASE_PATH || '/';
 const browserSslEnabled = process.env.BROWSER_SSL_ENABLED === 'true';
 
+app.use(express.json());
 // Middleware
 app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.listen(port, () => {
+    console.log(`Backend listening on http://localhost:${port}`);
+});
 
 // Helper function to get files and directories recursively
 function getFilesRecursively(dirPath) {
@@ -64,6 +70,25 @@ app.get('/api/files', (req, res) => {
     }
 });
 
+const { exec } = require('child_process');
+
+app.post('/api/open-terminal', (req, res) => {
+    const { filePath } = req.body;
+    
+    if (!filePath) {
+        return res.status(400).send('File path is required');
+    }
+    
+    // Replace `alacritty` with your terminal of choice if needed
+    exec(`alacritty --working-directory=${filePath} -e nano ${filePath}`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error opening terminal: ${error.message}`);
+            return res.status(500).send('Failed to open terminal');
+        }
+        res.status(200).send('Terminal opened');
+    });
+});
+
 // API for system status
 app.get('/api/system-status', (req, res) => {
     const cpuUsage = os.loadavg();
@@ -102,6 +127,30 @@ app.get('/api/browser-config', (req, res) => {
         sslEnabled: browserSslEnabled,
         apiKey: browserApiKey,
         basePath: browserBasePath
+    });
+});
+
+// API to store the active file path
+app.post('/api/store-file-path', (req, res) => {
+    const { filePath } = req.body;
+    if (!filePath) {
+        return res.status(400).json({ error: 'File path is required' });
+    }
+    fs.writeFile('/tmp/active_file_path', filePath, (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to save file path' });
+        }
+        res.json({ success: true });
+    });
+});
+
+// API to read the active file path for YAD
+app.get('/api/get-file-path', (req, res) => {
+    fs.readFile('/tmp/active_file_path', 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to read file path' });
+        }
+        res.json({ filePath: data });
     });
 });
 

@@ -3,8 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const viewer = document.getElementById('documentViewer');
 
     function displayFileName(fileName) {
-        document.getElementById('fileName').textContent = `${fileName}`;
-    }
+        const fileNameElement = document.getElementById('fileName');
+        const terminalBtn = document.getElementById('openTerminalBtn');
+    
+        fileNameElement.textContent = `${fileName}`;
+    
+        // Show "Open in Terminal" button for code or document files only
+        const ext = fileName.split('.').pop().toLowerCase();
+        if (['js', 'html', 'css', 'py', 'sh', 'md'].includes(ext)) {
+            terminalBtn.style.display = 'inline';  // Show button
+        } else {
+            terminalBtn.style.display = 'none';  // Hide button for other types like PDFs
+        }
+    }    
 
     // Function to load a text document
     function loadTextDocument(filePath) {
@@ -51,7 +62,82 @@ document.addEventListener('DOMContentLoaded', function() {
             search(query, 'directories');
         });
     });
+
+    function storeActiveFilePath(filePath) {
+        fetch('/api/store-file-path', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filePath })
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Failed to store file path');
+            }
+        })
+        .catch(err => console.error('Error storing file path:', err));
+    }
     
+    function openInTerminal() {
+        fetch('/api/get-file-path')
+            .then(response => response.json())
+            .then(data => {
+                const filePath = data.filePath;
+                // Now use this file path to open in terminal
+                document.getElementById('terminalIframe').src = `/terminal?file=${encodeURIComponent(filePath)}`;
+                document.getElementById('terminalPane').style.display = 'block';
+            })
+            .catch(err => console.error('Error opening terminal:', err));
+    }    
+    
+    document.getElementById('openTerminalBtn').addEventListener('click', openInTerminal);
+    
+    function openInTerminal() {
+        const activeFilePath = getActiveFilePath();  // Retrieve active file
+        fetch('/api/open-terminal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ filePath: activeFilePath }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('terminalIframe').src = `http://localhost:3000/terminal?file=${encodeURIComponent(activeFilePath)}`;
+                document.getElementById('terminalPane').style.display = 'block';  // Show terminal pane
+            } else {
+                console.error('Failed to open terminal:', data.error);
+            }
+        })
+        .catch(err => console.error('Error opening terminal:', err));
+    }
+
+    function getActiveFilePath() {
+        const activeFileElement = document.querySelector('#fileName');  // Assuming this is where the active file is shown
+        return activeFileElement ? activeFileElement.textContent : null;
+    }
+    
+    function openInTerminal() {
+        const filePath = getActiveFilePath();
+        if (!filePath) {
+            console.error('No active file to open in terminal');
+            return;
+        }
+    
+        fetch('/api/open-terminal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filePath: filePath })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Opened terminal successfully');
+            } else {
+                console.error('Failed to open terminal');
+            }
+        })
+        .catch(err => console.error('Error opening terminal:', err));
+    }
     
     // Function to load a code document and apply CodeMirror
     function loadCodeDocument(filePath) {
@@ -97,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Switch to PDF Viewer tab
         document.querySelector('a[href="#pdfViewer"]').click();
-    }    
+    }   
     
     // Fetch and display directory structure recursively
     function renderTree(files, parentElement, level = 0) {
@@ -117,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const link = document.createElement('a');
             
             // Using Nerd Font icons
-            link.innerHTML = file.isDirectory ? `<i class="nf nf-cod-folder"></i> ${file.name}` : `<i class="nf nf-cod-file"></i> ${file.name}`;
+            link.innerHTML = file.isDirectory ? `<i class="nf nf-cod-folder"></i> ${file.name}` : `<i class="nf nf-cod-fileD"></i> ${file.name}`;
             link.href = '#';
     
             if (level > 0) {
@@ -161,9 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
         parentElement.appendChild(ul);
     }
     
-    
-    
-
     function displayFileDetails(filePath) {
         fetch(`/api/file-info?path=${encodeURIComponent(filePath)}`)
             .then(response => response.json())
