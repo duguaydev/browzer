@@ -1,0 +1,216 @@
+@font-face {
+    font-family: 'AgaveNerdFont';
+    src: url('./fonts/AgaveNerdFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AgaveNerdFont';
+    src: url('./fonts/AgaveNerdFont-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AgaveNerdFontMono';
+    src: url('./fonts/AgaveNerdFontMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AgaveNerdFontMono';
+    src: url('./fonts/AgaveNerdFontMono-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AgaveNerdFontPropo';
+    src: url('./fonts/AgaveNerdFontPropo-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AgaveNerdFontPropo';
+    src: url('./fonts/AgaveNerdFontPropo-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+    /* General Page Colors */
+    --background: var(--background);       /* Main background color */
+    --text-color: var(--foreground);             /* Main text color */
+    --cursor-color: var(--cursor);               /* Cursor color */
+    
+    /* Header & Footer Colors */
+    --header-background: var(--color0);    /* Background for headers */
+    --header-text-color: var(--color7);          /* Text color for headers */
+    --footer-background: var(--color1);    /* Background for footer */
+    --footer-text-color: var(--color15);         /* Text color for footer */
+    
+    /* Accent and Highlight Colors */
+    --accent-color: var(--color1);               /* Accent color for important elements */
+    --highlight-color: var(--color6);            /* Highlight color for active/focused elements */
+    --button-background: var(--color4);    /* Background color for buttons */
+    --button-text-color: var(--color7);          /* Text color for buttons */
+    
+    /* Borders and Lines */
+    --border-color: var(--color3);               /* Color for borders or dividers */
+    --input-border-color: var(--color5);         /* Border color for input fields */
+    --input-bg-color: var(--color0);             /* Input background color */
+    
+    /* Links and Interactive Elements */
+    --link-color: var(--color2);                 /* Color for links */
+    --link-hover-color: var(--color9);           /* Color when hovering over links */
+    
+    /* Sidebar */
+    --sidebar-background: var(--color2);   /* Background color for sidebars */
+    --sidebar-text-color: var(--color8);         /* Text color for sidebars */
+    
+    /* Modal and Popup Colors */
+    --modal-background: var(--color5);     /* Modal background */
+    --modal-text-color: var(--color7);           /* Modal text color */
+    --modal-border-color: var(--color4);         /* Modal border color */
+    
+    /* Notification and Alert Colors */
+    --notification-background: var(--color1); /* Background for notifications */
+    --notification-text-color: var(--color7);      /* Text color for notifications */
+    --alert-background: var(--color9);       /* Background color for alerts */
+    --alert-text-color: var(--color15);            /* Text color for alerts */
+}
+
+
+/* General Page Layout */
+body {
+    font-family: 'AgaveNerdFont', sans-serif;  /* You can change the font here */
+    color: var(--text-color);
+    background: var(--background-color);
+    cursor: var(--cursor-color);
+}
+
+/* Headers */
+.sticky-top,
+.container-fluid {
+    background: var(--background-color);
+    color: var(--header-text-color);
+}
+
+/* Footer */
+footer {
+    background: var(--footer-background-color);
+    color: var(--footer-text-color);
+}
+
+/* Buttons */
+button {
+    background: var(--button-background-color);
+    color: var(--button-text-color);
+    border: 1px solid var(--border-color);
+}
+
+button:hover {
+    background: var(--highlight-color);
+    color: var(--text-color);
+}
+
+/* Inputs */
+input {
+    background: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--text-color);
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Sidebar */
+.sidebar {
+    background: var(--sidebar-background-color);
+    color: var(--sidebar-text-color);
+    border-radius: 8px;
+    border: 1px transparent;
+}
+
+/* Modals */
+.modal {
+    background: var(--modal-background-color);
+    color: var(--modal-text-color);
+    border: 1px solid var(--modal-border-color);
+}
+
+/* Notifications */
+.notification {
+    background: var(--notification-background-color);
+    color: var(--notification-text-color);
+}
+
+/* Alerts */
+.alert {
+    background: var(--alert-background-color);
+    color: var(--alert-text-color);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--accent-color);
+}
+
+/* Icons */
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-home {
+    background: url('/path/to/icons/home.svg') no-repeat center;
+}
+
+.icon-folder {
+    background: url('/path/to/icons/folder.svg') no-repeat center;
+}
+
+.icon-file {
+    background: url('/path/to/icons/file.svg') no-repeat center;
+}
+
+.theme-switcher {
+    background: var(--background-color);  /* Use the theme background color */
+    color: var(--text-color);                  /* Use the theme text color */
+    border: 1px solid var(--border-color);     /* Use the theme border color */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    appearance: none;                          /* Remove default dropdown arrow for custom styling */
+    cursor: pointer;
+}
+
+/* Style the dropdown arrow */
+.theme-switcher::-ms-expand {
+    display: none;  /* Remove default dropdown arrow in IE */
+}
+
+.theme-switcher option {
+    background: var(--background-color);  /* Use the theme background color */
+    color: var(--text-color);                  /* Use the theme text color */
+}
+
+/* Add hover and focus effects */
+.theme-switcher:hover {
+    background: var(--highlight-color);  /* Highlight color on hover */
+}
+
+.theme-switcher:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--highlight-color);
+}

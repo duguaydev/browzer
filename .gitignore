@@ -1,0 +1,12 @@
+# Ignore environment file
+Browzer/backend/.env
+
+# Ignore node_modules directory
+node_modules/
+Browzer/backend/node_modules/
+
+# Ignore logs folder in the app subdirectory
+app/logs/
+
+# Ignore all .log files in the entire project
+*.log
