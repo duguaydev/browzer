@@ -22,14 +22,14 @@ body {
 }
 
 .CodeMirror {
-    height: 100%;
-    width: 100%;
+    height: 700px !important;
+    max-width: 100%;
     border: 1px solid #ddd;
 }
 
 #codeEditor {
-    height: 500px;
-    width: 100%;
+    height: 700px !important;
+    max-width: 100%;
 }
 
 /* Directory Tree Styles */
