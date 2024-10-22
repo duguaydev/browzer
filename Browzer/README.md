@@ -1,4 +1,4 @@
-# Project Name
+# Browzer
 
 ## Overview
 This project is a local file browser built using **HTML5**, **Bootstrap 5**, **CSS3**, **JavaScript** for the front-end, and **Node.js** for the backend. It allows for browsing and editing files, system status monitoring, and seamless user interaction.
