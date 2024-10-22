@@ -65,7 +65,7 @@ body {
 /* Directory Tree Styles */
 #directoryTree ul {
     list-style-type: none;  /* Remove bullets */
-    padding-left: 1px;     /* Indent nested lists */
+    padding-left: 0px;     /* Indent nested lists */
 }
 
 #directoryTree li a {
@@ -93,16 +93,15 @@ body {
 }
 
 #directoryTree li ul {
-    margin-top: 5px;
+    margin-top: 5dpx;
 }
 
 /* Scrollable Directory Tree */
 #directoryTree {
-    height: 80vh; 
+    height: 70vh; 
     width: 18vw;      /* Example max height for testing scrollbar */
-    overflow-y: auto;        /* Enable vertical scrolling */
-    scrollbar-width: thin;   /* For Firefox: thin scrollbar */
-    scrollbar-color: var(--highlight-color) var(--sidebar-background-color); /* For Firefox: custom colors */
+    overflow-y: auto;
+    font-size: 1rem;        /* Enable vertical scrolling *//* For Firefox: custom colors */
 }
 
 /* Webkit browsers (Chrome, Safari) custom scrollbar styling */
@@ -112,18 +111,22 @@ body {
 }
 
 #directoryTree::-webkit-scrollbar-track {
-    background: var(--sidebar-background-color);  /* Scrollbar track background */
-}d
+    background-color: var(--highlight-color);     /* Scrollbar thumb color */
+}
 
 #directoryTree::-webkit-scrollbar-thumb {
     background-color: var(--highlight-color);     /* Scrollbar thumb color */
-    border-radius: 10px;                          /* Round scrollbar edges */
 }
 
 #directoryTree::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-color);        /* Change color on hover */
+    background-color: var(--highlight-color);     /* Scrollbar thumb color */
 }
 
+.small-font {
+    color: var(--highlight-color);     /* Scrollbar thumb color */
+    font-size: 0.85em;
+    padding-left: 10px; /* Adjust the indentation level */
+}
 
 /* Document Viewer */
 .document-viewer {

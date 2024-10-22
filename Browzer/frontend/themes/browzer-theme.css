@@ -168,14 +168,21 @@ body {
 }
 
 .column9 {
-    width: 300px; /* Adjust as needed */
+    background-color: var(--sidebar-background-color) !important;  /* Sidebar background */
+    width: 500px; /* Adjust as needed */
     padding: 10px;
-    background-color: #f8f9fa; /* Match your sidebar */
-    height: 100vh; /* Full height */
-    position: fixed; /* Keep it aligned next to the directory tree */
-    right: 0;
-    top: 0;
+    height: 83vh; /* Full height */
+    position: fixed;
+    bottom: 0;
+    right: 0; /* Keep it aligned next to the directory tree */
     overflow-y: auto;
+}
+
+.column9 p {
+    margin: 0px 0px 0px 0px;
+    padding: 0px auto;
+    font-size: 1.1rem;
+    font-weight: 400;
 }
 /* Footer */
 footer {
@@ -207,11 +214,12 @@ a:hover {
 
 /* Sidebar */
 .sidebar {
-    background: var(--sidebar-background-color);
     color: var(--sidebar-text-color);
     font-size: 1.5rem;
     border-radius: 8px;
     border: 1px transparent;
+    overflow-y: auto; 
+    overflow-x: hidden;
 }
 
 /* Modals */
@@ -235,7 +243,8 @@ a:hover {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-    color: var(--accent-color);
+    font-weight: 900;
+    color: var(--highlight-color);
 }
 
 /* Icons */
@@ -288,16 +297,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .search-bar {
+    display: flex;
     margin: 5px 5px 5px 5px;
-    width: 350px;
+    max-width: 350px;
 }
 
 /* Inputs */
 input {
+    display: flex;
     background: var(--input-bg-color);
     border: 1px solid var(--input-border-color);
     border-radius: 8px;
     color: var(--text-color);
-    width: 350px;
+    max-width: 350px;
     align-items: left;
 }

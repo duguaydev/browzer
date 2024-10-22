@@ -100,52 +100,69 @@ document.addEventListener('DOMContentLoaded', function() {
     }    
     
     // Fetch and display directory structure recursively
-    function renderTree(files, parentElement) {
+    function renderTree(files, parentElement, level = 0) {
+        files.sort((a, b) => {
+            if (a.isDirectory && !b.isDirectory) return -1;
+            if (!a.isDirectory && b.isDirectory) return 1;
+            if (a.name.startsWith('.') && !b.name.startsWith('.')) return 1;
+            if (!a.name.startsWith('.') && b.name.startsWith('.')) return -1;
+            return a.name.localeCompare(b.name);
+        });
+    
         const ul = document.createElement('ul');
-
+        ul.style.paddingLeft = `${5 * level}px`;
+    
         files.forEach(file => {
             const listItem = document.createElement('li');
             const link = document.createElement('a');
-            link.textContent = file.name;
-            link.href = '#';  // Prevent page reload
-
-            // Handle click to open directory or file
-            // Inside the renderTree function
+            
+            // Using Nerd Font icons
+            link.innerHTML = file.isDirectory ? `<i class="nf nf-cod-folder"></i> ${file.name}` : `<i class="nf nf-cod-file"></i> ${file.name}`;
+            link.href = '#';
+    
+            if (level > 0) {
+                link.classList.add('small-font');
+            }
+    
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                
+    
                 if (file.isDirectory) {
-                    // Handle directory behavior
-                } else {
-                    // Determine the file type
-                    const fileExtension = file.name.split('.').pop().toLowerCase();
-
-                    if (fileExtension === 'pdf') {
-                        loadPDFDocument(file.path);  // Load PDF files
-                    } else if (['js', 'html', 'css', 'py', 'sh', 'md'].includes(fileExtension)) {
-                        loadCodeDocument(file.path);  // Load code files with syntax highlighting
+                    const subTree = listItem.querySelector('ul');
+                    if (subTree) {
+                        subTree.style.display = subTree.style.display === 'none' ? 'block' : 'none';
                     } else {
-                        loadTextDocument(file.path);  // Load other text files
+                        const newSubTree = document.createElement('ul');
+                        renderTree(file.children, newSubTree, level + 1);
+                        listItem.appendChild(newSubTree);
                     }
-
-                    // Add this to call file details API and display info
+                } else {
                     displayFileDetails(file.path);
+                    const fileExtension = file.name.split('.').pop().toLowerCase();
+                    if (fileExtension === 'pdf') {
+                        loadPDFDocument(file.path);
+                    } else if (['js', 'html', 'css', 'py', 'sh', 'md'].includes(fileExtension)) {
+                        loadCodeDocument(file.path);
+                    } else {
+                        loadTextDocument(file.path);
+                    }
                 }
             });
-
-
+    
             listItem.appendChild(link);
-
-            // If it's a directory, render its children recursively
+    
             if (file.isDirectory && file.children && file.children.length > 0) {
-                renderTree(file.children, listItem);  // Recursive call
+                renderTree(file.children, listItem, level + 1);
             }
-
+    
             ul.appendChild(listItem);
         });
-
+    
         parentElement.appendChild(ul);
     }
+    
+    
+    
 
     function displayFileDetails(filePath) {
         fetch(`/api/file-info?path=${encodeURIComponent(filePath)}`)
