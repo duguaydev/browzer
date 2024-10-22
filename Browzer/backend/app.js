@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Load Browser Server Variables
 const browserHost = process.env.BROWSER_HOST || 'localhost';

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@lezer/highlight": "^1.2.1",
+    "@xterm/xterm": "^5.5.0",
     "codemirror": "^5.65.18",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -16,7 +17,8 @@
     "fs": "0.0.1-security",
     "os": "0.1.1",
     "pdfjs-dist": "^4.7.76",
-    "thememirror": "^2.0.1"
+    "thememirror": "^2.0.1",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
