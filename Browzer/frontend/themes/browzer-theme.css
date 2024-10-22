@@ -168,16 +168,14 @@ body {
 }
 
 .column9 {
-    display: flex;
-    flex-direction: column;
-    width: 900px;
-    max-width: 100%;
-    height: auto;
-    margin: 5px 5px 5px 5px; /* Center the column on the browser */
-    padding: 0px;
-    text-align: right;
-    bottom: 0;
-    left: 0;
+    width: 300px; /* Adjust as needed */
+    padding: 10px;
+    background-color: #f8f9fa; /* Match your sidebar */
+    height: 100vh; /* Full height */
+    position: fixed; /* Keep it aligned next to the directory tree */
+    right: 0;
+    top: 0;
+    overflow-y: auto;
 }
 /* Footer */
 footer {

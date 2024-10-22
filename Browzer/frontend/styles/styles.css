@@ -162,7 +162,7 @@ body {
     color: var(--highlight-color);
     font-weight: 700;
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: 20pxd;
 }
 /* Container for Sidebar and Document Viewer */
 .container {

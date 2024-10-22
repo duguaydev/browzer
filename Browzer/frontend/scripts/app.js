@@ -110,17 +110,14 @@ document.addEventListener('DOMContentLoaded', function() {
             link.href = '#';  // Prevent page reload
 
             // Handle click to open directory or file
+            // Inside the renderTree function
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-
+                
                 if (file.isDirectory) {
-                    // Toggle display of subdirectories
-                    const subTree = listItem.querySelector('ul');
-                    if (subTree) {
-                        subTree.style.display = subTree.style.display === 'none' ? 'block' : 'none';
-                    }
+                    // Handle directory behavior
                 } else {
-                    // Determine file type by extension and load accordingly
+                    // Determine the file type
                     const fileExtension = file.name.split('.').pop().toLowerCase();
 
                     if (fileExtension === 'pdf') {
@@ -130,8 +127,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         loadTextDocument(file.path);  // Load other text files
                     }
+
+                    // Add this to call file details API and display info
+                    displayFileDetails(file.path);
                 }
             });
+
 
             listItem.appendChild(link);
 
