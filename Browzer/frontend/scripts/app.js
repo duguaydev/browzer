@@ -20,13 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 viewer.innerHTML = '';  // Clear previous content
                 const editor = CodeMirror(viewer, {
                     value: content,
-                    mode: mode,  // Mode depends on the file extension
+                    mode: mode,  // Correct syntax mode based on extension
                     lineNumbers: true,
-                    theme: 'default'
+                    theme: 'default',
+                    lineWrapping: true,
+                    indentUnit: 4, // For indentation
                 });
             })
             .catch(err => console.error('Error loading code document:', err));
-    }
+    }    
 
     // Function to load a PDF into the document viewer
     function loadPDFDocument(filePath) {
