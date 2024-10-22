@@ -1,3 +1,5 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+
 @font-face {
     font-family: 'AgaveNerdFont';
     src: url('./fonts/AgaveNerdFont-Regular.ttf') format('truetype');
@@ -109,6 +111,10 @@ body {
 }
 
 /* Tabs Styling */
+.nav {
+    padding-left:30px;
+    height: 40px;
+}
 .nav-tabs {
     border: none;
     border-bottom: none;
@@ -117,29 +123,24 @@ body {
 .nav-tabs .nav-link {
     border: none;
     border-bottom: none;
-    background-color: var(--theme-tab-bg);
+    background-color: transparent;
     color: var(--theme-tab-text);
-    border-radius: 0 0 7px 7px;
     margin-right: 1px;
 }
 
 .nav-tabs .nav-link:hover {
-    border-radius: 0 0 7px 7px;
     border: 1px solid var(--theme-active-tab-border);
     border-bottom: 1px solid var(--theme-active-tab-border);
 }
 
 .nav-tabs .nav-link.active {
-    background-color: var(--theme-active-tab-bg);
+    background-color: transparent;
     color: var(--theme-active-tab-text);
-    border-radius: 0 0 7px 7px;
-    border: 1px solid var(--theme-active-tab-border);
     border-bottom: 1px solid var(--theme-active-tab-border);
 }
 
 .tab-content {
-    border: 1px solid var(--theme-active-tab-border);
-    border-radius: 10px;
+    border: 0px solid transparent;
     background-color: var(--theme-tab-content-bg);
     padding: 15px;
     margin: 15px;
@@ -153,10 +154,35 @@ body {
     display: block;  /* Show the active tab */
 }
 
+.column6 {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    max-width: 100%;
+    height: auto;
+    margin: 5px 5px 5px 5px; /* Center the column on the browser */
+    padding: 0px;
+    text-align: left;
+    bottom: 0;
+    left: 0;
+}
+
+.column9 {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    max-width: 100%;
+    height: auto;
+    margin: 5px 5px 5px 5px; /* Center the column on the browser */
+    padding: 0px;
+    text-align: right;
+    bottom: 0;
+    left: 0;
+}
 /* Footer */
 footer {
-    background: var(--footer-background-color);
-    color: var(--footer-text-color);
+    background: var(--highlight-color);
+    color: var(--text-color);
 }
 
 /* Buttons */
@@ -168,13 +194,6 @@ button {
 
 button:hover {
     background: var(--highlight-color);
-    color: var(--text-color);
-}
-
-/* Inputs */
-input {
-    background: var(--input-bg-color);
-    border: 1px solid var(--input-border-color);
     color: var(--text-color);
 }
 
@@ -192,6 +211,7 @@ a:hover {
 .sidebar {
     background: var(--sidebar-background-color);
     color: var(--sidebar-text-color);
+    font-size: 1.5rem;
     border-radius: 8px;
     border: 1px transparent;
 }
@@ -200,7 +220,7 @@ a:hover {
 .modal {
     background: var(--modal-background-color);
     color: var(--modal-text-color);
-    border: 1px solid var(--modal-border-color);
+    border: 3px solid var(--modal-border-color);
 }
 
 /* Notifications */
@@ -267,4 +287,19 @@ h1, h2, h3, h4, h5, h6 {
 .theme-switcher:focus {
     outline: none;
     box-shadow: 0 0 5px var(--highlight-color);
+}
+
+.search-bar {
+    margin: 5px 5px 5px 5px;
+    width: 350px;
+}
+
+/* Inputs */
+input {
+    background: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    width: 350px;
+    align-items: left;
 }

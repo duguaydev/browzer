@@ -18,7 +18,10 @@ body {
 }
 
 .navbar-brand {
-    color: var(--text-color);  /* Sidebar link text color */
+    padding-left:30px;
+    color: var(--text-color);
+    font-weight: 900; /* Sidebar link text color */
+    font-size: 1.7rem;
 }
 
 .CodeMirror {
@@ -31,11 +34,38 @@ body {
     height: 700px !important;
     max-width: 100%;
 }
+#pdfViewer canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.pdf-viewer {
+    flex-grow: 1; /* Take up remaining space */
+    background-color:transparent;  /* Customize background */
+    color: var(--text-color);                  /* Customize text color */
+    width: 100%;
+    height: auto; 
+    margin-top: 50px;  
+    padding-bottom: 0;    /* Full height */
+    overflow: hidden;
+    bottom: 0;
+    left: 0;
+}
+
+/* Customize scrollbars */
+.pdf-viewer::-webkit-scrollbar {
+    width: 5px;
+}
+
+.pdf-viewer::-webkit-scrollbar-thumb {
+    background-color: var(--highlight-color);
+    border-radius: 10px;
+}
 
 /* Directory Tree Styles */
 #directoryTree ul {
     list-style-type: none;  /* Remove bullets */
-    padding-left: 10px;     /* Indent nested lists */
+    padding-left: 1px;     /* Indent nested lists */
 }
 
 #directoryTree li a {
@@ -44,6 +74,16 @@ body {
 }
 
 #directoryTree li a:hover {
+    text-decoration: underline;
+    color: var(--highlight-color);  /* Highlight color on hover */
+}
+
+#directoryTree li a:focusd {
+    text-decoration: underline;
+    color: var(--highlight-color);  /* Highlight color on hover */
+}
+
+#directoryTree li a:checked {
     text-decoration: underline;
     color: var(--highlight-color);  /* Highlight color on hover */
 }
@@ -58,7 +98,8 @@ body {
 
 /* Scrollable Directory Tree */
 #directoryTree {
-    max-height: 700px;       /* Example max height for testing scrollbar */
+    height: 80vh; 
+    width: 18vw;      /* Example max height for testing scrollbar */
     overflow-y: auto;        /* Enable vertical scrolling */
     scrollbar-width: thin;   /* For Firefox: thin scrollbar */
     scrollbar-color: var(--highlight-color) var(--sidebar-background-color); /* For Firefox: custom colors */
@@ -87,14 +128,16 @@ body {
 /* Document Viewer */
 .document-viewer {
     flex-grow: 1;
-    background-color: var(--background-color);  /* Viewer background based on theme */
-    color: var(--text-color);                  /* Text color based on theme */
-    padding: 20px;
-    height: auto;                             /* Full height of the viewport */
-    overflow-y: auto;                          /* Scrollable content */
-    border: 1px solid var(--border-color);     /* Border with theme color */
-    border-radius: 8px;                        /* Rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for a nice effect */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 5px;
+    height: auto;
+    font-size: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    white-space: pre-wrap;  /* Ensure line breaks are respected */
+    word-wrap: break-word;  /* Prevent overflowing text */
+    overflow-x: auto;       /* Horizontal scrolling if needed */
 }
 
 /* Scrollbar Styling for Document Viewer */
@@ -115,6 +158,12 @@ body {
     background-color: var(--accent-color);     /* Change color on hover */
 }
 
+.file-name {
+    color: var(--highlight-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
 /* Container for Sidebar and Document Viewer */
 .container {
     display: flex;

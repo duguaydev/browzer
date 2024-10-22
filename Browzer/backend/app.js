@@ -9,7 +9,7 @@ const app = express();
 const browserHost = process.env.BROWSER_HOST || 'localhost';
 const browserPort = process.env.BROWSER_PORT || 3000;
 const browserApiKey = process.env.BROWSER_API_KEY;
-const browserBasePath = process.env.BROWSER_BASE_PATH || '/default/base/path';
+const browserBasePath = process.env.BROWSER_BASE_PATH || '/';
 const browserSslEnabled = process.env.BROWSER_SSL_ENABLED === 'true';
 
 // Middleware
@@ -75,11 +75,22 @@ app.get('/api/system-status', (req, res) => {
 // API for file content
 app.get('/api/file-content', (req, res) => {
     const filePath = req.query.path;
-    try {
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        res.send(fileContent);
-    } catch (err) {
-        res.status(500).json({ error: 'Error reading file content' });
+    const extension = path.extname(filePath).toLowerCase();
+
+    // Check if the file is a PDF
+    if (extension === '.pdf') {
+        res.sendFile(path.resolve(filePath), (err) => {
+            if (err) {
+                console.error(`Error sending PDF file: ${err.message}`);
+                res.status(500).send('Error serving PDF');
+            }
+        });
+    } else {
+        // Handle non-PDF files
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) return res.status(500).send('File not found');
+            res.send(data);
+        });
     }
 });
 
@@ -93,6 +104,12 @@ app.get('/api/browser-config', (req, res) => {
         basePath: browserBasePath
     });
 });
+
+const fileInfoRoutes = require('./routes/file-info');
+app.use('/api', fileInfoRoutes);
+
+const searchRoutes = require('./routes/searchRoutes');
+app.use('/api', searchRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

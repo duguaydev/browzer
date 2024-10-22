@@ -14,7 +14,9 @@
     <header class="sticky-top">
         <nav class="navbar">
             <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1">Browzer</span>
+                <span class="navbar-brand mb-0 h1">
+                    <i class="nf nf-md-star_crescent"></i> Browzer
+                  </span>                  
                 <select id="theme-selector" class="theme-switcher">
                     <option value="Nordic Pink">Nordic Pink</option>
                     <option value="Nord Blue">Nord Blue</option>
@@ -25,46 +27,79 @@
     </header>
 
     <!-- Tabs Navigation -->
+    <!-- Tabs Navigation -->
     <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" href="#documentViewer" data-bs-toggle="tab">Document Viewer</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#codeEditor" data-bs-toggle="tab">Code Viewer</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#pdfViewer" data-bs-toggle="tab">PDF Viewer</a>
-      </li>
-    </ul>
+        <li class="nav-item">
+        <a class="nav-link active" href="#documentViewer" data-bs-toggle="tab">
+            <span class="nf nf-md-text_box_outline"></span> DOC
+        </a>
+        </li>
 
+
+        <li class="nav-item">
+        <a class="nav-link" href="#codeEditor" data-bs-toggle="tab">
+            <span class="nf nf-md-code_braces"></span> CODE
+        </a>
+        </li>
+
+
+        <li class="nav-item">
+        <a class="nav-link" href="#pdfViewer" data-bs-toggle="tab">
+            <span class="nf nf-md-file_pdf_box"></span> PDF
+        </a>
+        </li>
+    </ul>
+  
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar for Directory Tree -->
             <aside class="col-3 bg-light sidebar">
-                <ul id="directoryTree">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search system...">
+                </div>
+                <ul id="directoryTree"></ul>
+                
                     <!-- Directory tree will load here dynamically -->
                 </ul>
             </aside>
-
+    
             <!-- Main Content with Tabs -->
-            <main class="col-9">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="documentViewer">
-
+            <main class="col-6 column6">
+                <div class="file-name" id="fileName"></div>
+                <div class="tab-pane active" id="documentViewer">
+                        <!-- Document Viewer Content -->
                     </div>
+                    <div id="fileName"></div>
                     <div class="tab-pane" id="codeEditor">
-
+                        <!-- CodeMirror Editor -->
                     </div>
+                    <div id="fileName"></div>
                     <div class="tab-pane" id="pdfViewer">
-
+                        <div class="pdf-viewer">
+                            <iframe src="" id="pdfIframe" style="border: none !important; background-color: var(--background-color);"></iframe>
+                        </div>
                     </div>
                 </div>
             </main>
         </div>
-    </div> 
+    </div>
 
+    <!-- Right Sidebar: File, Directory, System Information -->
+    <aside class="column9">
+        <div id="fileDetails">
+            <h4>File Details</h4>
+            <p><strong>Path:</strong> <span id="filePath"></span></p>
+            <p><strong>Name:</strong> <span id="fileNameDetail"></span></p>
+            <p><strong>Size:</strong> <span id="fileSize"></span></p>
+            <p><strong>Creation Date:</strong> <span id="creationDate"></span></p>
+            <p><strong>Last Access:</strong> <span id="lastAccess"></span></p>
+            <p><strong>Owner:</strong> <span id="fileOwner"></span></p>
+        </div>        
+    </aside>    
+</div>
+</div>
     <!-- Status Bar -->
-    <footer class="fixed-bottom bg-dark text-white d-flex justify-content-between px-3">
+    <footer class="footer fixed-bottom d-flex justify-content-between px-3">
         <span>System Status: Good</span>
     </footer>
 
@@ -79,6 +114,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/shell/shell.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+</script>
 <!-- Your Custom Scripts -->
 <script src="scripts/app.js"></script>
 <script src="themes/theme-switcher.js"></script>
