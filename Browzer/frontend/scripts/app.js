@@ -145,6 +145,36 @@ document.addEventListener('DOMContentLoaded', function() {
         else return `${(bytes / 1048576).toFixed(2)} MB`;
     }
 
+    document.addEventListener('DOMContentLoaded', function () {
+    const terminalPane = document.getElementById('terminalPane');
+    const terminalIframe = document.getElementById('terminalIframe');
+    const terminal = new Terminal();
+    terminal.open(terminalPane);
+    terminal.fit();
+
+    const socket = new WebSocket('ws://localhost:3001');
+    socket.onopen = () => {
+        console.log('WebSocket connection established.');
+    };
+
+    socket.onmessage = (event) => {
+        terminal.write(event.data);
+    };
+
+    terminal.onData(data => {
+        socket.send(data);
+    });
+
+    // Show terminal when clicking the "Open in Terminal" button
+    document.getElementById('openTerminalBtn').addEventListener('click', function () {
+        terminalIframe.style.display = 'block';
+    });
+
+    // Hide terminal initially
+    terminalIframe.style.display = 'none';
+});
+
+
     // Fetch files and directories
     function fetchFiles(path = '') {
         fetch(`/api/files?path=${encodeURIComponent(path)}`)

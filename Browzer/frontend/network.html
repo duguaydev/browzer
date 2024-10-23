@@ -10,6 +10,46 @@
     <link rel="stylesheet" href="themes/browzer-theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
     <link rel="stylesheet" href="backend/node_modules/@xterm/xterm/css/xterm.css" />
+    <style>
+         h1 {
+            text-align: left;
+            color: var(--highlight-color);
+            background-color: var(--header-background);
+            padding: 5px;
+            padding-top: 40px;
+            font-size: 2rem;
+            border-radius: 5px;
+        }
+        .connections-section {
+            background-color: var(--theme-tab-content-bg);
+            padding: 5px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            border: 0px transparent;
+        }
+        .connections-section h3 {
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        pre {
+            background-color: var(--background-color);
+            color: var(--sidebar-text-color);
+            padding: 5px;
+            border: 0px transparent;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--notification-text-color);
+        }
+    </style>
 </head>
 <body>
     <header class="sticky-top">
@@ -143,36 +183,31 @@
             </aside>
                   <!-- Main Content with Tabs -->
               <main class="col-6 col-md-6 col-lg-6 column6">
-                <div class="file-name" id="fileName"></div><button id="openTerminalBtn" style="display:none;">Open in Terminal</button>
-                   <div class="tab-pane active" id="documentViewer">
-                           <!-- Document Viewer Content -->
-                       </div>
-                       <div id="fileName"></div>
-                       <div class="tab-pane" id="codeEditor">
-                           <!-- CodeMirror Editor -->
-                       </div>
-                       <div id="fileName"></div>
-                       <div class="tab-pane" id="pdfViewer">
-                           <div class="pdf-viewer">
-                               <iframe src="" id="pdfIframe" style="border: none !important; background-color: var(--background-color);"></iframe>
-                           </div>
-                       </div>
-                       <div class="tab-pane active" id="terminalPane" style="display:none;">
-                           <iframe id="terminalIframe" style="width:100%; height:70vh;"></iframe>
-                       </div>
-                   </div>
+                <h1>Active Network Connections</h1>
+
+                <div class="connections-section">
+                    <h3>Connections</h3>
+                    <pre id="activeConnections">Loading...</pre>
+                </div>
+            
+                <div class="connections-section">
+                    <h3>Server Connections</h3>
+                    <div id="serverConnections">
+                        <pre id="serverConnectionsOutput">Loading...</pre>
+                    </div>
+
+                    <div class="system-info-section">
+                        <h3><i class="fas fa-network-wired"></i> Network Information</h3>
+                        <pre id="networkInfo">Loading...</pre>
+                    </div>
+                </div>
                </main>
 
                <aside class="column3 bg-light">
-                    <div id="fileDetails">
-                        <h4>File Details</h4>
-                        <p>Path: <span id="filePath"></span></p>
-                        <p>Name: <span id="fileNameDetail"></span></p>
-                        <p>Size: <span id="fileSize"></span></p>
-                        <p>Creation Date: <span id="creationDate"></span></p>
-                        <p>Last Access: <span id="lastAccess"></span></p>
-                        <p>Owner: <span id="fileOwner"></span></p>
-                    </div>        
+                    <div class="connections-section">
+                        <h4>Configuration File Paths:</h4>
+                        <ul id="configFilePaths"></ul>
+                    </div>    
                 </aside>
             </div>
             </div>
@@ -194,6 +229,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>        // Fetch active connections
+        fetch('/api/connections/active')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('activeConnections').textContent = data;
+            })
+            .catch(error => {
+                console.error('Error fetching active connections:', error);
+                document.getElementById('activeConnections').textContent = 'Error fetching active connections.';
+            });
+
+        // Fetch server connections and config file paths
+        fetch('/api/connections/servers')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('serverConnectionsOutput').textContent = data.connections;
+
+                // Display the config file paths
+                const configPaths = data.configFiles;
+                const configFilePathsElement = document.getElementById('configFilePaths');
+                Object.keys(configPaths).forEach(service => {
+                    const li = document.createElement('li');
+                    li.textContent = `${service}: ${configPaths[service]}`;
+                    configFilePathsElement.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching server connections:', error);
+                document.getElementById('serverConnectionsOutput').textContent = 'Error fetching server connections.';
+            });
+
+        fetch('/api/system-info/network')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('networkInfo').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error fetching network info:', error);
+                document.getElementById('networkInfo').innerHTML = 'Error fetching network information.';
+            });
+</script>
 <script>
     document.getElementById('openTerminalBtn').addEventListener('click', openInTerminal);
 </script>

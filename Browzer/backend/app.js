@@ -10,7 +10,7 @@ const port = 3001;
 const browserHost = process.env.BROWSER_HOST || 'localhost';
 const browserPort = process.env.BROWSER_PORT || 3000;
 const browserApiKey = process.env.BROWSER_API_KEY;
-const browserBasePath = process.env.BROWSER_BASE_PATH || '/';
+const browserBasePath = process.env.BROWSER_BASE_PATH || 'home/paulgrey';
 const browserSslEnabled = process.env.BROWSER_SSL_ENABLED === 'true';
 
 app.use(express.json());
@@ -141,6 +141,133 @@ app.post('/api/store-file-path', (req, res) => {
             return res.status(500).json({ error: 'Failed to save file path' });
         }
         res.json({ success: true });
+    });
+});
+
+// API to fetch system information using inxi
+app.get('/api/system-info', (req, res) => {
+    exec('inxi -Fz', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error fetching system info: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch system information' });
+        }
+        if (stderr) {
+            console.error(`Error: ${stderr}`);
+            return res.status(500).json({ error: 'Error fetching system information' });
+        }
+        res.send(stdout); // Return the raw output as text
+    });
+});
+
+// API to fetch CPU information
+app.get('/api/system-info/cpu', (req, res) => {
+    exec('lscpu', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing lscpu: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch CPU information' });
+        }
+        res.send(stdout);
+    });
+});
+
+// API to fetch memory information
+app.get('/api/system-info/memory', (req, res) => {
+    exec('free -h', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing free: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch memory information' });
+        }
+        res.send(stdout);
+    });
+});
+
+// API to fetch storage information
+app.get('/api/system-info/storage', (req, res) => {
+    exec('df -h', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing df: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch storage information' });
+        }
+        res.send(stdout);
+    });
+});
+
+// API to fetch network information
+app.get('/api/system-info/network', (req, res) => {
+    exec('ip a', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing ip a: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch network information' });
+        }
+        res.send(stdout);
+    });
+});
+
+// API to fetch active connections using ss
+app.get('/api/connections/active', (req, res) => {
+    exec('ss -tuln', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing ss: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch active connections' });
+        }
+        res.send(stdout);
+    });
+});
+
+// API to fetch server connection details
+app.get('/api/connections/servers', (req, res) => {
+    exec('ss -tuln', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing ss for servers: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch server connections' });
+        }
+
+        // Manually map some common services to their config file paths
+        const configFiles = {
+            nginx: '/etc/nginx/nginx.conf',
+            apache: '/etc/httpd/conf/httpd.conf',
+            ssh: '/etc/ssh/sshd_config'
+        };
+
+        // Return both the active connections and their config file paths
+        res.json({
+            connections: stdout,
+            configFiles: configFiles
+        });
+    });
+});
+
+// API to fetch active connections using ss
+app.get('/api/connections/active', (req, res) => {
+    exec('ss -tuln', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing ss: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch active connections' });
+        }
+        res.send(stdout);
+    });
+});
+
+// API to fetch server connection details
+app.get('/api/connections/servers', (req, res) => {
+    exec('ss -tuln', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing ss for servers: ${error.message}`);
+            return res.status(500).json({ error: 'Failed to fetch server connections' });
+        }
+
+        // Manually map some common services to their config file paths
+        const configFiles = {
+            nginx: '/etc/nginx/nginx.conf',
+            apache: '/etc/httpd/conf/httpd.conf',
+            ssh: '/etc/ssh/sshd_config'
+        };
+
+        // Return both the active connections and their config file paths
+        res.json({
+            connections: stdout,
+            configFiles: configFiles
+        });
     });
 });
 

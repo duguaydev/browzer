@@ -143,24 +143,27 @@
             </aside>
                   <!-- Main Content with Tabs -->
               <main class="col-6 col-md-6 col-lg-6 column6">
-                <div class="file-name" id="fileName"></div><button id="openTerminalBtn" style="display:none;">Open in Terminal</button>
-                   <div class="tab-pane active" id="documentViewer">
-                           <!-- Document Viewer Content -->
-                       </div>
-                       <div id="fileName"></div>
-                       <div class="tab-pane" id="codeEditor">
-                           <!-- CodeMirror Editor -->
-                       </div>
-                       <div id="fileName"></div>
-                       <div class="tab-pane" id="pdfViewer">
-                           <div class="pdf-viewer">
-                               <iframe src="" id="pdfIframe" style="border: none !important; background-color: var(--background-color);"></iframe>
-                           </div>
-                       </div>
-                       <div class="tab-pane active" id="terminalPane" style="display:none;">
-                           <iframe id="terminalIframe" style="width:100%; height:70vh;"></iframe>
-                       </div>
-                   </div>
+                <h1 style="padding-top: 40px">System Information</h1>
+
+                <div class="system-info-section">
+                    <h3><i class="fas fa-microchip"></i> CPU Information</h3>
+                    <pre id="cpuInfo">Loading...</pre>
+                </div>
+            
+                <div class="system-info-section">
+                    <h3><i class="fas fa-memory"></i> Memory Information</h3>
+                    <pre id="memoryInfo">Loading...</pre>
+                </div>
+            
+                <div class="system-info-section">
+                    <h3><i class="fas fa-hdd"></i> Storage Information</h3>
+                    <pre id="storageInfo">Loading...</pre>
+                </div>
+            
+                <div class="system-info-section">
+                    <h3><i class="fas fa-network-wired"></i> Network Information</h3>
+                    <pre id="networkInfo">Loading...</pre>
+                </div>
                </main>
 
                <aside class="column3 bg-light">
@@ -194,6 +197,51 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+    // Fetch CPU Information
+    fetch('/api/system-info/cpu')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('cpuInfo').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error fetching CPU info:', error);
+            document.getElementById('cpuInfo').innerHTML = 'Error fetching CPU information.';
+        });
+
+    // Fetch Memory Information
+    fetch('/api/system-info/memory')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('memoryInfo').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error fetching memory info:', error);
+            document.getElementById('memoryInfo').innerHTML = 'Error fetching memory information.';
+        });
+
+    // Fetch Storage Information
+    fetch('/api/system-info/storage')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('storageInfo').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error fetching storage info:', error);
+            document.getElementById('storageInfo').innerHTML = 'Error fetching storage information.';
+        });
+
+    // Fetch Network Information
+    fetch('/api/system-info/network')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('networkInfo').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error fetching network info:', error);
+            document.getElementById('networkInfo').innerHTML = 'Error fetching network information.';
+        });
+</script>
 <script>
     document.getElementById('openTerminalBtn').addEventListener('click', openInTerminal);
 </script>

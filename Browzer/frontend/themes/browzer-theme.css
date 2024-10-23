@@ -110,9 +110,55 @@ body {
     color: var(--header-text-color);
 }
 
-/* Tabs Styling */
+.nav-item .nav-text {
+    display: none; /* Hide the text by default */
+    font-size: 0.9rem;
+    text-align: center;
+    width: 100%; /* Ensure the text stays centered */
+    white-space: nowrap;
+}
+
+.nav-item .icon {
+    font-size: 2rem; /* Make the icons bigger */
+    display: block;
+    text-align: center;
+    transition: font-size 0.3s ease; /* Smooth transition for icon size */
+    width: 100%; /* Center the icon */
+}
+
+.nav-item .icon:hover,
+.nav-item .icon:focus {
+    color: var(--highlight-color);
+}
+
+.nav-item a:hover .nav-text,
+.nav-item a:focus .nav-text {
+    font-weight: 700;
+    color: var(--highlight-color);
+    display: block; 
+    /* Show text on hover or focus */
+}
+
+.nav-item a:hover .icon,
+.nav-item a:focus .icon {
+    padding-bottom: 1px;
+    color: var(--highlight-color);
+    font-size: 1.8rem; /* Make the icons smaller when the text is visible */
+}
+
+/* Center the text below the icon */
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100px; /* Set a fixed width for each nav item to maintain alignment */
+}
+
+
 .nav {
     padding-left:30px;
+    padding-right:30px;
     height: 40px;
 }
 .nav-tabs {
@@ -125,18 +171,11 @@ body {
     border-bottom: none;
     background-color: transparent;
     color: var(--theme-tab-text);
-    margin-right: 1px;
-}
-
-.nav-tabs .nav-link:hover {
-    border: 1px solid var(--theme-active-tab-border);
-    border-bottom: 1px solid var(--theme-active-tab-border);
 }
 
 .nav-tabs .nav-link.active {
     background-color: transparent;
     color: var(--theme-active-tab-text);
-    border-bottom: 1px solid var(--theme-active-tab-border);
 }
 
 .tab-content {
@@ -155,35 +194,39 @@ body {
 }
 
 .column6 {
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    justify-content: left;
+    align-items: left;/* Changed from fixed to relative */
     width: 900px;
     max-width: 100%;
     height: auto;
-    margin: 5px 5px 5px 5px; /* Center the column on the browser */
-    padding: 0px;
+    padding: 0;
     text-align: left;
     bottom: 0;
     left: 0;
 }
 
 .column3 {
-    background-color: var(--sidebar-background-color) !important;  /* Sidebar background */
-    width: 500px; /* Adjust as needed */
-    padding: 10px;
-    height: 83vh; /* Full height */
-    position: fixed;
-    bottom: 0;
-    right: 0; /* Keep it aligned next to the directory tree */
-    overflow-y: auto;
+    position: absolute; 
+    align-items: right;
+    justify-content: right;
+    text-align:  left;
+    top: 20vh; /* Align the sidebar to the top */
+    right: 30px;
+    width: 400px; /* Align the sidebar to the right */
+    max-width: 100%; /* Prevent shrinking below a certain size */
+    height: auto; /* Full height of the viewport */
+    background: transparent !important;
 }
 
 .column3 p {
-    margin: 0px 0px 0px 0px;
-    padding: 0px auto;
+    margin: 0;
+    padding: 0;
     font-size: 1.1rem;
     font-weight: 400;
 }
+
+
 /* Footer */
 footer {
     background: var(--highlight-color);
@@ -313,4 +356,41 @@ input {
     font-size: 1rem; 
     padding: 10px 10px 10px 10px;
     margin: 10px;
+}
+
+.system-info-section {
+    .system-info-section {
+        background-color: var(--theme-tab-content-bg);
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        border: 1px solid var(--theme-border-color);
+    }
+}
+.system-info-section h3 {
+    border-bottom: 2px solid var(--text-color);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.system-info-section pre {
+    background-color: var(--background-color);
+    color: var(--sidebar-text-color);
+    padding: 5px;
+    border: 0px transparent;
+    overflow-x: auto;
+    white-space: pre-wrap; /* Allows the text to wrap inside the pre block */
+}
+.system-info-section i {
+    margin-right: 5px;
+    color: var(--highlight-color);
+}
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--notification-text-color);
 }
