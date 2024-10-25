@@ -9,9 +9,9 @@ const port = 3001;
 // Load Browser Server Variables
 const browserHost = process.env.BROWSER_HOST || 'localhost';
 const browserPort = process.env.BROWSER_PORT || 3000;
-const browserApiKey = process.env.BROWSER_API_KEY;
-const browserBasePath = process.env.BROWSER_BASE_PATH || 'home/paulgrey';
-const browserSslEnabled = process.env.BROWSER_SSL_ENABLED === 'true';
+const browserApiKey = process.env.BROWSER_API_KEY;''
+const browserBasePath = process.env.BROWSER_BASE_PATH || '/home/paulgrey/Documents/duguaydev/duguaydev/browzer';
+const browserSslEnabled = process.env.BROWSER_SSL_ENABLED === 'false';
 
 app.use(express.json());
 // Middleware
