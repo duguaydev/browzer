@@ -1,0 +1,55 @@
+[paulgrey@paulgrey-omen browzer]$ tree -L3
+.
+├── Browzer
+│   ├── backend {nodejs backend }
+│   │   ├── app.js {npm run dev starts the nodemon server on port 3000 }
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── models
+│   │   ├── node_modules
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   ├── rm_memory_segments.sh.save
+│   │   ├── rm_memory_segments.sh.save.1
+│   │   └── routes
+│   └── frontend { html, css, javascript frontend }
+│       ├── assets
+│       ├── index.html { Browzer landing page }
+│       ├── network.html
+│       ├── scripts
+│       ├── servers.html
+│       ├── styles
+│       ├── system.html
+│       └── themes {multi theming using css }
+├── browzer.sh { Start the frontend }
+├── create_project.sh { Builds the project directory tree and basic files }
+├── package-lock.json
+└── README.md
+
+{{ FRONTEND }}
+ 
+frontend
+├── assets
+├── index.html
+├── network.html
+├── scripts
+│   └── app.js { app.js frontend script // connect with the backend app.js}d
+├── servers.html
+├── styles
+│   └── styles.css
+├── system.html
+└── themes
+    ├── browzer-theme.css
+    ├── codemirrorTheme.js
+    ├── color-palettes.json
+    ├── fonts
+    │   ├── AgaveNerdFont-Bold.ttf
+    │   ├── AgaveNerdFontMono-Bold.ttf
+    │   ├── AgaveNerdFontMono-Regular.ttf
+    │   ├── AgaveNerdFontPropo-Bold.ttf
+    │   ├── AgaveNerdFontPropo-Regular.ttf
+    │   └── AgaveNerdFont-Regular.ttf
+    ├── icons
+    └── theme-switcher.js
+    
+    r
